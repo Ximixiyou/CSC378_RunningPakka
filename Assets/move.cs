@@ -10,10 +10,12 @@ public class move : MonoBehaviour
     private int jumps = 0; // number of jumps made so far
     public LayerMask groundLayer;
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer; // Add a reference to the SpriteRenderer component
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Get a reference to the SpriteRenderer component
     }
 
     void Update()
@@ -30,7 +32,6 @@ public class move : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight - transform.position.y);
             jumps++;
         }
-
     }
 
     bool IsGrounded()
@@ -60,6 +61,19 @@ public class move : MonoBehaviour
         if (other.gameObject.CompareTag("Platform"))
         {
             transform.parent = null;
+        }
+    }
+
+    // Add this function to change the sprite based on the player's velocity
+    void LateUpdate()
+    {
+        if (rb.velocity.x > 0)
+        {
+            spriteRenderer.flipX = false; // The sprite faces right
+        }
+        else if (rb.velocity.x < 0)
+        {
+            spriteRenderer.flipX = true; // The sprite faces left
         }
     }
 }
