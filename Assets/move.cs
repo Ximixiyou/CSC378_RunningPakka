@@ -5,7 +5,7 @@ using UnityEngine;
 public class move : MonoBehaviour
 {
     public float jumpForce = 10f;
-    public float maxJumpHeight = 5f; // maximum height the ball can jump
+    public float maxJumpHeight = 1f; // maximum height the ball can jump
     public int maxJumps = 1; // maximum number of jumps allowed
     private int jumps = 0; // number of jumps made so far
     public LayerMask groundLayer;
@@ -29,15 +29,15 @@ public class move : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && jumps < maxJumps)
         {
-            float jumpHeight = transform.position.y + maxJumpHeight;
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight - transform.position.y);
+            float jumpVelocity = Mathf.Sqrt(2 * jumpForce * maxJumpHeight);
+            rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
             jumps++;
         }
     }
 
     bool IsGrounded()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.2f);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
         foreach (Collider2D collider in colliders)
         {
             if (collider.gameObject.CompareTag("Platform"))
