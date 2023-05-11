@@ -11,6 +11,7 @@ public class move : MonoBehaviour
     public LayerMask groundLayer;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer; // Add a reference to the SpriteRenderer component
+    public Animator animator; 
 
     void Start()
     {
