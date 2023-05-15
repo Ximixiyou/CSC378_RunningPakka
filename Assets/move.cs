@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class move : MonoBehaviour
 {
-    public float jumpForce = 10f;
-    public float maxJumpHeight = 1f; // maximum height the ball can jump
+    public float jumpForce = 5f;
+    public float maxJumpHeight = 3f; // maximum height the ball can jump
     public int maxJumps = 1; // maximum number of jumps allowed
     private int jumps = 0; // number of jumps made so far
     public LayerMask groundLayer;
