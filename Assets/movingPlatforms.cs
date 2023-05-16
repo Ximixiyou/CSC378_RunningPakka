@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class movingPlatforms : MonoBehaviour
 {
     public float leftLimit = -15.0f;
     public float resetXPosition = 40.0f;
     public float speed = 0.5f;
     private int direction = 1;
-
+    public GameObject bonePrefab;
+    public float boneProbability = 0.5f;
     private Vector3 initialPosition;
 
     void Start()
@@ -35,5 +37,16 @@ public class movingPlatforms : MonoBehaviour
     void ResetPosition()
     {
         transform.position = new Vector3(resetXPosition, initialPosition.y, initialPosition.z);
+        if (transform.childCount > 0)
+        {
+            Transform bone = transform.GetChild(0);
+            Destroy(bone.gameObject);
+        }
+        if (Random.value <= boneProbability)
+        {
+            GameObject bone = Instantiate(bonePrefab, transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
+            bone.transform.parent = transform;
+        }
     }
+
 }
