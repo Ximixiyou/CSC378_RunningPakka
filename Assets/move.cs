@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class move : MonoBehaviour
 {
-    public float jumpForce = 5f;
-    public float maxJumpHeight = 3f; // maximum height the ball can jump
+    public float jumpForce = 1f;
+    public float maxJumpHeight = 1f; // maximum height the ball can jump
     public int maxJumps = 1; // maximum number of jumps allowed
     private int jumps = 0; // number of jumps made so far
     public LayerMask groundLayer;
@@ -24,8 +24,8 @@ public class move : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector2 movement = new Vector2(horizontalInput, verticalInput);
-        rb.velocity += movement * jumpForce * Time.deltaTime;
+        Vector2 movement = new Vector2(horizontalInput * jumpForce, rb.velocity.y);
+        rb.velocity = movement;
 
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && jumps < maxJumps)
         {
@@ -34,6 +34,7 @@ public class move : MonoBehaviour
             jumps++;
         }
     }
+
 
     bool IsGrounded()
     {

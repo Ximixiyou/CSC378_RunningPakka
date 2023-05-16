@@ -34,6 +34,7 @@ public class movingPlatforms : MonoBehaviour
         }
     }
 
+    /*
     void ResetPosition()
     {
         transform.position = new Vector3(resetXPosition, initialPosition.y, initialPosition.z);
@@ -46,6 +47,26 @@ public class movingPlatforms : MonoBehaviour
         {
             GameObject bone = Instantiate(bonePrefab, transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
             bone.transform.parent = transform;
+        }
+    }*/
+
+    void ResetPosition()
+    {
+        transform.position = new Vector3(resetXPosition, initialPosition.y, initialPosition.z);
+
+        if (transform.childCount > 0)
+        {
+            Transform bone = transform.GetChild(0);
+            Destroy(bone.gameObject);
+        }
+
+        if (Random.value <= boneProbability)
+        {
+            if (bonePrefab != null) // Check if bonePrefab is assigned
+            {
+                GameObject bone = Instantiate(bonePrefab, transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
+                bone.transform.parent = transform;
+            }
         }
     }
 
