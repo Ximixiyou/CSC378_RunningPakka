@@ -16,6 +16,9 @@ public class ItemCollection : MonoBehaviour
         if (collision.gameObject.CompareTag("Bone")) {
             Destroy(collision.gameObject);
             scoreManager.IncreaseScore();
+        } else if (collision.gameObject.CompareTag("Enemy")) {
+            scoreManager.Die();
         }
      }
+
 }

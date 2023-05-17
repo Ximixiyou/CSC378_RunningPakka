@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Platform
   - Bone
+  - Enemy
   layers:
   - Default
   - TransparentFX

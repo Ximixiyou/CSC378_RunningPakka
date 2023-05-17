@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -14,5 +15,11 @@ public class ScoreManager : MonoBehaviour
         score++;
         scoreText.text = "Score: " + score;
         Debug.Log("Score: " + score);
+    }
+
+    public void Die()
+    {
+        PlayerPrefs.SetInt("FinalScore", score);
+        SceneManager.LoadScene("Ending");
     }
 }
