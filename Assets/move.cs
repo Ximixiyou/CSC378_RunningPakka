@@ -11,12 +11,14 @@ public class move : MonoBehaviour
     public LayerMask groundLayer;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer; // Add a reference to the SpriteRenderer component
-    public Animator animator; 
+    public Animator animator;
+    private AudioSource jumpSound;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Get a reference to the SpriteRenderer component
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        jumpSound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -32,6 +34,8 @@ public class move : MonoBehaviour
             float jumpVelocity = Mathf.Sqrt(2 * jumpForce * maxJumpHeight);
             rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
             jumps++;
+
+            jumpSound.Play(); // Play the jump sound
         }
     }
 
@@ -50,13 +54,19 @@ public class move : MonoBehaviour
         return false;
     }
 
+
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.CompareTag("Platform"))
         {
-            jumps = 0; // reset number of jumps
+            ContactPoint2D contact = collision.GetContact(0);
+            if (contact.normal.y > 0.7f) // Check if collision occurs at the bottom of the character
+            {
+                jumps = 0; // Reset number of jumps
+            }
         }
     }
+
 
     void OnCollisionExit2D(Collision2D other)
     {
@@ -69,11 +79,13 @@ public class move : MonoBehaviour
     // Add this function to change the sprite based on the player's velocity
     void LateUpdate()
     {
-        if (rb.velocity.x > 0)
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        if (horizontalInput > 0)
         {
             spriteRenderer.flipX = false; // The sprite faces right
         }
-        else if (rb.velocity.x < 0)
+        else if (horizontalInput < 0)
         {
             spriteRenderer.flipX = true; // The sprite faces left
         }
